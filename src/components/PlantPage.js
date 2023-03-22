@@ -33,11 +33,30 @@ function PlantPage() {
 
   const filteredPlants = plants.filter(plant => plant.name.toLowerCase().includes(search.toLowerCase()))
 
+  function onUpdatePlant(updatedPlant){
+    console.log(updatedPlant)
+    const updatedPlants = filteredPlants.map(plant => {
+      if(updatedPlant.id == plant.id){
+        return updatedPlant
+      }
+      else {
+        return plant
+      }
+    })
+    setPlants(updatedPlants)
+  }
+
+  function onDeletePlant(deletedPlant){
+    console.log(deletedPlant)
+    const updatedPlants = filteredPlants.filter(plant => plant != deletedPlant)
+    setPlants(updatedPlants)
+  }
+
   return (
     <main>
       <NewPlantForm addNewPlant={handleNewPlant}/>
       <Search mcSerch={onMcSerch}/>
-      <PlantList plants = {filteredPlants}/>
+      <PlantList plants = {filteredPlants} updatePlant={onUpdatePlant} deletePlant={onDeletePlant}/>
     </main>
   );
 }
